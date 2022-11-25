@@ -1,0 +1,21 @@
+name: "Download ici workspace"
+description: "Download ici workspace from a tarball artifact"
+inputs:
+  path:
+    description: "download destination"
+    required: false
+    default: ici
+runs:
+  using: "composite"
+  steps:
+    - name: Download artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: ici-workspace
+        path: /tmp
+    - name: Extract tarball
+      shell: bash
+      run: |
+        mkdir -p ${{ inputs.path }}
+        cd ${{ inputs.path }}
+        tar xzf /tmp/ici.tar.gz
